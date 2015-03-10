@@ -1,0 +1,5 @@
+1234.pgm
+test-scene.pgm
+input1.pgm
+lena.pgm
+ordered.pgm

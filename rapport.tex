@@ -1,0 +1,73 @@
+\documentclass[10pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{verbatim}
+
+\definecolor{Zgris}{rgb}{0.87,0.85,0.85}
+
+\newsavebox{\BBbox}
+\newenvironment{DDbox}[1]{
+\begin{lrbox}{\BBbox}\begin{minipage}{\linewidth}}
+{\end{minipage}\end{lrbox}\noindent\colorbox{Zgris}{\usebox{\BBbox}} \\
+[.5cm]}
+
+\title{Rapport de Projet}
+\date{}
+
+\begin{document}
+\maketitle
+
+\part*{Organisation du code}
+Les fonctions créé ont été dispatché sur plusieurs fichiers, la plupart ont été mise dans deux nouveaux fichiers : "iterator.c" et "command.c".
+Cependant certaines fonctions utilitaires ont été créées dans les fichiers existants.
+
+\begin{description}
+\item[image.c :] image\_create, image\_empty\_cpy, image\_init\_from.
+\end{description}
+
+\begin{description}
+\item[iterator.c :] Il s'agit du code gérant l'iterateur permettant le parcours en Z.
+\item[command.c :] L'ensemble des fonctions gérant les appels du main.
+\item[compression.c :] L'ensemble des fonctions utilisées pour la compression.
+\item[decompression.c :] L'ensemble des fonctions utilisées pour la décompression.
+\end{description} 
+
+\part*{Optimisation}
+
+
+
+\part*{Parallélisation}
+
+\section*{calcul de l'optimisation}
+Le calcul de l'optimisation de l'idct a été faite à l'aide des deux programmes compilés fournis. "compressor" est l'exécutable obtenu en compilant le code fourni, old\_compressor est l'exécutable que l'on obtiendrait en enlevant toutes les optimisations fournies.
+Le calcul a été fait en utilisant la command bash time :\\
+
+\begin{DDbox}{\linewidth}
+\begin{verbatim}
+$ time bash -c 'old_compressor 1 <fichier.pgm> <fichier.pgm.xxx>\ 
+&& old_compressor 0 <fichier.pgm.xxx> <fichier.pgm>
+$ time bash -c 'compressor 1 <fichier.pgm> <fichier.pgm.xxx>\ 
+&& compressor 0 <fichier.pgm.xxx> <fichier.pgm>
+\end{verbatim}
+\end{DDbox}
+
+resultat :
+time ./old_compressor 0 testpat.pgm.xxx testpat2.pgm
+
+real	0m0.847s
+user	0m0.836s
+sys	0m0.002s
+
+time ./compressor 0 testpat.pgm.xxx testpat2.pgm
+
+real	0m0.697s
+user	0m2.429s
+sys	0m0.076s
+
+
+\end{document}
